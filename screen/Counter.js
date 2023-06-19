@@ -109,39 +109,42 @@ function Counter({ navigation: { navigate } }) {
   const { useRealm, useQuery } = DBContext;
   const realmDB = useRealm();
   const affirmationDatas = useQuery(Affirmation);
-  // const notAchievedAffirmationDatas = affirmationDatas.filtered('datas.date >= $0 && datas.success == false', today);
-  const notAchievedAffirmationDatasLength = affirmationDatas.length - 1;
+  // const filteredAffirmationDatas = affirmationDatas.filter((element) => 
+  //   element.datas.length === 0
+  // );
+  // console.log(filteredAffirmationDatas);
+  const filteredAffirmationDatasLength = affirmationDatas.length;
   const [selected, setSelected] = useState(false);
   const [counterNum, setCounterNum] = useState(0);
   const [affirmationNum, setAffirmationNum] = useState(0);
   const [affirmationData, setAffirmationData] = useState(null);
-  // function handleAffirmationData() {
-  //   realmDB.write(() => {
-  //     let data = affirmationData.datas.find((element) => element.date === todayValue && element.success === false );
-  //     if(data === undefined) {
-  //       affirmationData.datas.push({
-  //         date: todayValue,
-  //         success: true,
-  //       });
-  //     }
-  //   });
-  // }
+  function handleAffirmationData() {
+    realmDB.write(() => {
+      let data = affirmationData.datas.find((element) => element.date === todayValue && element.success === false );
+      if(data === undefined) {
+        affirmationData.datas.push({
+          date: todayValue,
+          success: true,
+        });
+      }
+    });
+  }
   useEffect(() => {
     if(affirmationDatas.length !== 0) {
       setAffirmationData(affirmationDatas[0]);
     } else {
       setAffirmationData(null);
     }
-  }, [affirmationDatas]);
+  }, []);
   useEffect(() => {
     if(affirmationData !== null) {
       if(affirmationNum === affirmationData.goal) {
+        handleAffirmationData();
         num += 1;
-        if(num <= notAchievedAffirmationDatasLength) {
-          setAffirmationNum(0);
-          // handleAffirmationData();
+        if(num < filteredAffirmationDatasLength) {
           setAffirmationData(affirmationDatas[num]);
-        } else if(num > notAchievedAffirmationDatasLength) {
+          setAffirmationNum(0);
+        } else if(num >= filteredAffirmationDatasLength) {
           setAffirmationData(null);
         }
       }
