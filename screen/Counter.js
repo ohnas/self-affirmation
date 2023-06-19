@@ -94,7 +94,6 @@ const AffirmationFooter = styled.View`
   justify-content: center;
   align-items: center;
 `;
-
 let num = 0;
 function Counter({ navigation: { navigate } }) {
   const today = new Date();
@@ -111,31 +110,40 @@ function Counter({ navigation: { navigate } }) {
   const realmDB = useRealm();
   const affirmationDatas = useQuery(Affirmation);
   // const notAchievedAffirmationDatas = affirmationDatas.filtered('datas.date >= $0 && datas.success == false', today);
-  // const notAchievedAffirmationDatasLength = notAchievedAffirmationDatas.length - 1;
+  const notAchievedAffirmationDatasLength = affirmationDatas.length - 1;
   const [selected, setSelected] = useState(false);
   const [counterNum, setCounterNum] = useState(0);
   const [affirmationNum, setAffirmationNum] = useState(0);
-  const [affirmationData, setAffirmationData] = useState(affirmationDatas[num]);
+  const [affirmationData, setAffirmationData] = useState(null);
   // function handleAffirmationData() {
-  //   // realmDB.write(() => {
-  //   //   let data = affirmationData.datas.find((element) => element.date === todayValue && element.success === false );
-  //   //   if(data === undefined) {
-  //   //     affirmationData.datas.push({
-  //   //       date: todayValue,
-  //   //       success: true,
-  //   //     });
-  //   //   }
-  //   // });
-  //   console.log('im here');
-  //   console.log(affirmationDataIndex);
+  //   realmDB.write(() => {
+  //     let data = affirmationData.datas.find((element) => element.date === todayValue && element.success === false );
+  //     if(data === undefined) {
+  //       affirmationData.datas.push({
+  //         date: todayValue,
+  //         success: true,
+  //       });
+  //     }
+  //   });
   // }
   useEffect(() => {
     if(affirmationDatas.length !== 0) {
+      setAffirmationData(affirmationDatas[0]);
+    } else {
+      setAffirmationData(null);
+    }
+  }, [affirmationDatas]);
+  useEffect(() => {
+    if(affirmationData !== null) {
       if(affirmationNum === affirmationData.goal) {
         num += 1;
-        setAffirmationNum(0);
-        // handleAffirmationData();
-        setAffirmationData(affirmationDatas[num]);
+        if(num <= notAchievedAffirmationDatasLength) {
+          setAffirmationNum(0);
+          // handleAffirmationData();
+          setAffirmationData(affirmationDatas[num]);
+        } else if(num > notAchievedAffirmationDatasLength) {
+          setAffirmationData(null);
+        }
       }
     } else {
       return;
@@ -174,7 +182,10 @@ function Counter({ navigation: { navigate } }) {
             {affirmationDatas.length === 0 ? 
               <Text style={{fontSize: 20, color:'white'}}>No data.</Text>
               :
-              <AffirmationMessage message={affirmationData.message} />
+              affirmationData === null ? 
+                <Text style={{fontSize: 20, color:'white'}}>No data.</Text>
+                :
+                <AffirmationMessage message={affirmationData.message} />
             }
           </AffirmationHeader>
           <AffirmationBody>
@@ -184,7 +195,10 @@ function Counter({ navigation: { navigate } }) {
               {affirmationDatas.length === 0 ? 
                 <AffirmationBodyText>Goal</AffirmationBodyText>
                 :
-                <AffirmationGoal goal={affirmationData.goal} />
+                affirmationData === null ? 
+                  <AffirmationBodyText>Goal</AffirmationBodyText>
+                  :
+                  <AffirmationGoal goal={affirmationData.goal} />
               }
             </AffirmationBodyBox>
             <AffirmationFooter>
