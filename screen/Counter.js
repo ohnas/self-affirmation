@@ -115,20 +115,21 @@ function Counter({ navigation: { navigate } }) {
   const [filteredAffirmationDatas, setFilteredAffirmationDatas] = useState([]);
   const [filteredAffirmationDatasLength, setFilteredAffirmationDatasLength] = useState(0);
   const [affirmationData, setAffirmationData] = useState(null);
-  // function handleAffirmationData() {
-  //   realmDB.write(() => {
-  //     let data = affirmationData.datas.find((element) => element.date === todayValue && element.success === false );
-  //     if(data === undefined) {
-  //       affirmationData.datas.push({
-  //         date: todayValue,
-  //         success: true,
-  //       });
-  //     }
-  //   });
-  // }
+  function handleAffirmationData() {
+    realmDB.write(() => {
+      let data = affirmationData.datas.find((element) => element.date === todayValue && element.success === true );
+      if(data === undefined) {
+        affirmationData.datas.push({
+          date: todayValue,
+          success: true,
+        });
+      }
+    });
+  }
   useEffect(() => {
     if(affirmationDatas.length !== 0) {
-      const filteredDatas = affirmationDatas.filter((element) => element.datas.length === 0 || element.datas.some((data) => data.date === todayValue && data.success === false));
+      const filteredDatas = affirmationDatas.filter((element) => element.datas.length === 0 || !element.datas.some((data) => data.date === todayValue && data.success === true));
+      console.log(filteredDatas);
       const filteredDatasLength = filteredDatas.length;
       if(filteredDatas.length !== 0) {
         setFilteredAffirmationDatas(filteredDatas);
@@ -144,7 +145,7 @@ function Counter({ navigation: { navigate } }) {
   useEffect(() => {
     if(affirmationData !== null) {
       if(affirmationNum === affirmationData.goal) {
-        // handleAffirmationData();
+        handleAffirmationData();
         num += 1;
         if(num < filteredAffirmationDatasLength) {
           setAffirmationData(filteredAffirmationDatas[num]);
