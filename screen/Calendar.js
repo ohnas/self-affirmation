@@ -1,7 +1,11 @@
 import React from 'react';
 import { styled } from 'styled-components/native';
 import { Calendar } from 'react-native-calendars';
+import { Dimensions } from 'react-native';
+import { DBContext, Affirmation } from '../context';
 
+const windowWidth = Dimensions.get('window').width;
+// const windowHeight = Dimensions.get('window').height;
 
 const Container = styled.View`
   flex: 1;
@@ -11,10 +15,37 @@ const Container = styled.View`
 `;
 
 function CalendarScreen() {
+  const { useObject } = DBContext;
+  // const myTask = useObject(Affirmation, _id);
   return(
-      <Container>
-        <Calendar />
-      </Container>
+    <Container>
+      <Calendar 
+        style={{width: windowWidth * 0.95}} 
+        markingType={'custom'}
+        markedDates={{
+          '2023-06-19': {
+            customStyles: {
+              container: {
+                backgroundColor: 'red'
+              },
+              text: {
+                color: 'black'
+              }
+            }
+          },
+          '2023-06-20': {
+            customStyles: {
+              container: {
+                backgroundColor: 'green',
+              },
+              text: {
+                color: 'black'
+              }
+            }
+          }
+        }}
+      />
+    </Container>
   );
 }
 

@@ -9,6 +9,7 @@ export class Affirmation extends Realm.Object {
       message: 'string',
       goal: 'int',
       datas: { type: 'list', objectType: 'Data', default: [] },
+      created_at: 'string',
     },
     primaryKey: '_id',
   };
@@ -26,6 +27,7 @@ class Data extends Realm.Object {
 
 const config = {
   schema: [Affirmation, Data],
+  schemaVersion: 2,
 };
 
 export const DBContext = createRealmContext(config);
