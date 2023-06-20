@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
 import Counter from "../screen/Counter";
-import Calendar from "../screen/Calendar";
+import CalendarScreen from "../screen/Calendar";
 import Setting from "../screen/Setting";
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +19,7 @@ function Tabs() {
             />
             <Tab.Screen 
                 name="Calendar" 
-                component={Calendar}
+                component={CalendarScreen}
                 options={{
                     tabBarIcon: () => <Ionicons name="calendar-outline" size={24} color="black" />
                 }}

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text } from "react-native";
 import { styled } from 'styled-components/native';
+import { Calendar } from 'react-native-calendars';
+
 
 const Container = styled.View`
   flex: 1;
@@ -9,10 +10,12 @@ const Container = styled.View`
   justify-content: center;
 `;
 
-function Calendar() {
+function CalendarScreen() {
   return(
-      <Container><Text>Calendar</Text></Container>
+      <Container>
+        <Calendar />
+      </Container>
   );
 }
 
-export default Calendar;
+export default CalendarScreen;

@@ -129,7 +129,6 @@ function Counter({ navigation: { navigate } }) {
   useEffect(() => {
     if(affirmationDatas.length !== 0) {
       const filteredDatas = affirmationDatas.filter((element) => element.datas.length === 0 || !element.datas.some((data) => data.date === todayValue && data.success === true));
-      console.log(filteredDatas);
       const filteredDatasLength = filteredDatas.length;
       if(filteredDatas.length !== 0) {
         setFilteredAffirmationDatas(filteredDatas);
