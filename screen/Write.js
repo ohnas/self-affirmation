@@ -92,6 +92,16 @@ const AffirmationDelBtn = styled.View`
 `;
 
 function Write() {
+  const today = new Date();
+  let month = today.getMonth() + 1;
+  if(month < 10) {
+    month = `0${month}`
+  }
+  let date = today.getDate();
+  if(date < 10) {
+    date = `0${date}`
+  }
+  const todayValue = `${today.getFullYear()}-${month}-${date}`;
   const { useRealm, useQuery } = DBContext;
   const realmDB = useRealm();
   const affirmationDatas = useQuery(Affirmation);
@@ -109,6 +119,7 @@ function Write() {
           _id: maxId,
           message: message,
           goal: Number(goal),
+          created_at: todayValue,
         });
       });
       setMessage("");
