@@ -151,7 +151,7 @@ function Counter({ navigation: { navigate } }) {
           setAffirmationData(filteredAffirmationDatas[num]);
           setAffirmationNum(0);
         } else if(num >= filteredAffirmationDatasLength) {
-          setAffirmationData(null);
+          setAffirmationData('Done');
         }
       }
     } else {
@@ -168,9 +168,9 @@ function Counter({ navigation: { navigate } }) {
         });
       });
     } else {
-      const data = achievementDatas.find((element) => element.date === todayValue && element.success === false);
+      const data = achievementDatas.find((element) => element.date === todayValue);
       if(data === undefined) {
-        const idList = achievementDatas.map((achievementData) => achievementData._id)
+        const idList = achievementDatas.map((achievementData) => achievementData._id);
         const achievementDatasMaxId = Math.max(...idList) + 1;
         realmDB.write(() => {
           realmDB.create("Achievement", {
@@ -220,7 +220,7 @@ function Counter({ navigation: { navigate } }) {
               affirmationData === null ? 
                 <Text style={{fontSize: 20, color:'white'}}>No data.</Text>
                 :
-                <AffirmationMessage message={affirmationData.message} />
+                <AffirmationMessage data={affirmationData} />
             }
           </AffirmationHeader>
           <AffirmationBody>
@@ -233,7 +233,7 @@ function Counter({ navigation: { navigate } }) {
                 affirmationData === null ? 
                   <AffirmationBodyText>Goal</AffirmationBodyText>
                   :
-                  <AffirmationGoal goal={affirmationData.goal} />
+                  <AffirmationGoal data={affirmationData} />
               }
             </AffirmationBodyBox>
             <AffirmationFooter>

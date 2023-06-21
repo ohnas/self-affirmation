@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components/native';
+import { DBContext, Achievement } from '../context';
 
 const Goal = styled.Text`
     font-size: 100px;
 `;
 
-function AffirmationGoal({ goal }) {
+function AffirmationGoal({ data }) {
+    const { useRealm, useQuery, useObject } = DBContext;
+    const realmDB = useRealm();
+    const achievementDatas = useQuery(Achievement);
+    const idList = achievementDatas.map((achievementData) => achievementData._id);
+    const achievementDatasMaxId = Math.max(...idList);
+    const todayAchievement = useObject(Achievement, achievementDatasMaxId);
+    useEffect(() => {
+        if(data === 'Done') {
+            realmDB.write(() => {
+                todayAchievement.success = true;
+              });
+        } else {
+            return;
+        }
+      }, [data]);
     return(
-        <Goal>{goal}</Goal>
+        <Goal>{data === 'Done' ? 'Done' : data.goal}</Goal>
     );
 }
 

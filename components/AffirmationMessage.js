@@ -6,9 +6,11 @@ const Message = styled.Text`
     color: white;
 `;
 
-function AffirmationMessage({ message }) {
+function AffirmationMessage({ data }) {
     return(
-        <Message>{message}</Message>
+        <Message>
+            {data === 'Done' ? 'Done' : data.message}
+        </Message>
     );
 }
 
