@@ -25,8 +25,20 @@ class Data extends Realm.Object {
   };
 }
 
+export class Achievement extends Realm.Object {
+  static schema = {
+    name: 'Achievement',
+    properties: {
+      _id: 'int',
+      date: 'string',
+      success: 'bool',
+    },
+    primaryKey: '_id',
+  };
+}
+
 const config = {
-  schema: [Affirmation, Data],
+  schema: [Affirmation, Data, Achievement],
   schemaVersion: 2,
 };
 

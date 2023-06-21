@@ -15,8 +15,9 @@ const Container = styled.View`
 `;
 
 function CalendarScreen() {
-  const { useObject } = DBContext;
-  // const myTask = useObject(Affirmation, _id);
+  const { useQuery } = DBContext;
+  const affirmationDatas = useQuery(Affirmation);
+  
   return(
     <Container>
       <Calendar 
