@@ -4,7 +4,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, Dimensions, Alert } from 'react-native';
-import { DBContext, Affirmation } from '../context';
+import { DBContext, Affirmation, Achievement } from '../context';
 import AffirmationMessage from '../components/AffirmationMessage';
 import AffirmationGoal from '../components/AffirmationGoal';
 
@@ -109,6 +109,7 @@ function Counter({ navigation: { navigate } }) {
   const { useRealm, useQuery } = DBContext;
   const realmDB = useRealm();
   const affirmationDatas = useQuery(Affirmation);
+  const achievementDatas = useQuery(Achievement);
   const [selected, setSelected] = useState(false);
   const [counterNum, setCounterNum] = useState(0);
   const [affirmationNum, setAffirmationNum] = useState(0);
@@ -157,6 +158,32 @@ function Counter({ navigation: { navigate } }) {
       return;
     }
   }, [affirmationNum]);
+  useEffect(() => {
+    if(achievementDatas.length === 0) {
+      realmDB.write(() => {
+        realmDB.create("Achievement", {
+          _id: 0,
+          date: todayValue,
+          success: false,
+        });
+      });
+    } else {
+      const data = achievementDatas.find((element) => element.date === todayValue && element.success === false);
+      if(data === undefined) {
+        const idList = achievementDatas.map((achievementData) => achievementData._id)
+        const achievementDatasMaxId = Math.max(...idList) + 1;
+        realmDB.write(() => {
+          realmDB.create("Achievement", {
+            _id: achievementDatasMaxId,
+            date: todayValue,
+            success: false,
+          });
+        });
+      } else {
+        return;
+      }
+    }
+  }, []);
   return(
     <Container>
       <Header>
