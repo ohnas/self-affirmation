@@ -37,8 +37,20 @@ export class Achievement extends Realm.Object {
   };
 }
 
+export class Mode extends Realm.Object {
+  static schema = {
+    name: 'Mode',
+    properties: {
+      _id: 'int',
+      name: 'string',
+      value: 'bool',
+    },
+    primaryKey: '_id',
+  };
+}
+
 const config = {
-  schema: [Affirmation, Data, Achievement],
+  schema: [Affirmation, Data, Achievement, Mode],
   schemaVersion: 2,
 };
 
