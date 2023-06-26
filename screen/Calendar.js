@@ -5,11 +5,11 @@ import { Dimensions } from 'react-native';
 import { DBContext, Achievement } from '../context';
 
 const windowWidth = Dimensions.get('window').width;
-// const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get('window').height;
 
 const Container = styled.View`
   flex: 1;
-  background-color: '#fff';
+  background-color: white;
   align-items: center;
   justify-content: center;
 `;

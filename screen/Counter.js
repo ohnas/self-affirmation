@@ -94,7 +94,6 @@ const AffirmationFooter = styled.View`
   justify-content: center;
   align-items: center;
 `;
-let num = 0;
 function Counter({ navigation: { navigate } }) {
   const today = new Date();
   let month = today.getMonth() + 1;
@@ -113,8 +112,6 @@ function Counter({ navigation: { navigate } }) {
   const [selected, setSelected] = useState(false);
   const [counterNum, setCounterNum] = useState(0);
   const [affirmationNum, setAffirmationNum] = useState(0);
-  const [filteredAffirmationDatas, setFilteredAffirmationDatas] = useState([]);
-  const [filteredAffirmationDatasLength, setFilteredAffirmationDatasLength] = useState(0);
   const [affirmationData, setAffirmationData] = useState(null);
   function handleAffirmationData() {
     realmDB.write(() => {
@@ -130,29 +127,22 @@ function Counter({ navigation: { navigate } }) {
   useEffect(() => {
     if(affirmationDatas.length !== 0) {
       const filteredDatas = affirmationDatas.filter((element) => element.datas.length === 0 || !element.datas.some((data) => data.date === todayValue && data.success === true));
-      const filteredDatasLength = filteredDatas.length;
       if(filteredDatas.length !== 0) {
-        setFilteredAffirmationDatas(filteredDatas);
-        setFilteredAffirmationDatasLength(filteredDatasLength);
         setAffirmationData(filteredDatas[0]);
       } else {
-        setAffirmationData(null);
+        setAffirmationData('Done');
       }
     } else {
       setAffirmationData(null);
     }
-  }, []);
+  }, [affirmationDatas]);
   useEffect(() => {
     if(affirmationData !== null) {
       if(affirmationNum === affirmationData.goal) {
         handleAffirmationData();
-        num += 1;
-        if(num < filteredAffirmationDatasLength) {
-          setAffirmationData(filteredAffirmationDatas[num]);
-          setAffirmationNum(0);
-        } else if(num >= filteredAffirmationDatasLength) {
-          setAffirmationData('Done');
-        }
+        setAffirmationNum(0);
+      } else {
+        return;
       }
     } else {
       return;
