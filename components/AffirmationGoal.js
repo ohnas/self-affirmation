@@ -17,9 +17,15 @@ function AffirmationGoal({ data }) {
         if(data === 'Done') {
             realmDB.write(() => {
                 todayAchievement.success = true;
-              });
+            });
         } else {
-            console.log(todayAchievement.success);
+            if(todayAchievement.success === true) {
+                realmDB.write(() => {
+                    todayAchievement.success = false;
+                });
+            } else if(todayAchievement.success === false) {
+                return;
+            }
         }
       }, [data]);
     return(
