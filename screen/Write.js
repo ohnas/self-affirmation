@@ -23,7 +23,6 @@ const TitleText = styled.Text`
   font-size: 20px;
   font-weight: 600;
 `;
-const TempDelBtn = styled.Button``;
 const InputBox = styled.View`
   flex: 1;
   flex-direction: row;
@@ -138,11 +137,6 @@ function Write() {
       realmDB.delete(object);
     });
   };
-  function deleteAllData() {
-    realmDB.write(() => {
-      realmDB.deleteAll();
-    });
-  };
   useEffect(() => {
     if(affirmationDatas.length === 0) {
       setMaxId(0);
@@ -154,7 +148,6 @@ function Write() {
     <Container>
       <TitleBox>
         <TitleText>Affirmation List</TitleText>
-        <TempDelBtn title='Delete all data' onPress={deleteAllData} />
       </TitleBox>
       <InputBox>
         <MessageInput  
