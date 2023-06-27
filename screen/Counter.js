@@ -131,6 +131,9 @@ function Counter({ navigation: { navigate } }) {
         setAffirmationData(filteredDatas[0]);
       } else {
         setAffirmationData('Done');
+        Alert.alert(
+          "알림" , "🎉 완료!!"
+        );  
       }
     } else {
       setAffirmationData(null);
