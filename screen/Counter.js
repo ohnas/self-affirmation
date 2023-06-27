@@ -204,26 +204,27 @@ function Counter({ navigation: { navigate } }) {
         :
         <>
           <AffirmationHeader>
-            {affirmationDatas.length === 0 ? 
+            {affirmationData === null ? 
               <Text style={{fontSize: 20, color:'white'}}>No data.</Text>
               :
-              affirmationData === null ? 
-                <Text style={{fontSize: 20, color:'white'}}>No data.</Text>
-                :
-                <AffirmationMessage data={affirmationData} />
+              <AffirmationMessage data={affirmationData} />
             }
           </AffirmationHeader>
           <AffirmationBody>
-            <AffirmationBodyBox onPress={() => setAffirmationNum((prev) => prev + 1 )}>
+            <AffirmationBodyBox onPress={() => {
+              if(affirmationData === 'Done') {
+                setAffirmationNum(0);
+              } else {
+                setAffirmationNum((prev) => prev + 1 );
+              }
+              }}
+            >
               <AffirmationBodyText>{affirmationNum}</AffirmationBodyText>
               <AffirmationBodyText>/</AffirmationBodyText>
-              {affirmationDatas.length === 0 ? 
+              {affirmationData === null ? 
                 <AffirmationBodyText>Goal</AffirmationBodyText>
                 :
-                affirmationData === null ? 
-                  <AffirmationBodyText>Goal</AffirmationBodyText>
-                  :
-                  <AffirmationGoal data={affirmationData} />
+                <AffirmationGoal data={affirmationData} />
               }
             </AffirmationBodyBox>
             <AffirmationFooter>

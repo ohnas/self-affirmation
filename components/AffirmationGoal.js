@@ -19,7 +19,7 @@ function AffirmationGoal({ data }) {
                 todayAchievement.success = true;
               });
         } else {
-            return;
+            console.log(todayAchievement.success);
         }
       }, [data]);
     return(
