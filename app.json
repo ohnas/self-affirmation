@@ -5,7 +5,12 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e9084c85-2921-4868-b104-ad863f7bbd16"
+      }
+    }
   },
   "name": "self-affirmation"
 }
