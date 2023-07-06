@@ -4,6 +4,7 @@ import { styled } from 'styled-components/native';
 const Message = styled.Text`
     font-size: 20px;
     color: white;
+    font-family: 'Pretendard-Regular';
 `;
 
 function AffirmationMessage({ data }) {

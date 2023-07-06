@@ -21,7 +21,7 @@ const TitleBox = styled.View`
 `;
 const TitleText = styled.Text`
   font-size: 20px;
-  font-weight: 600;
+  font-family: 'Pretendard-Regular';
 `;
 const InputBox = styled.View`
   flex: 1;
@@ -33,6 +33,7 @@ const InputBox = styled.View`
 const MessageInput = styled.TextInput`
   flex: 3;
   border-bottom-width: 2px;
+  font-family: 'Pretendard-Regular';
   font-size: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -42,6 +43,7 @@ const MessageInput = styled.TextInput`
 const GoalInput = styled.TextInput`
   flex: 1;
   border-bottom-width: 2px;
+  font-family: 'Pretendard-Regular';
   font-size: 20px;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -66,10 +68,12 @@ const AffirmationMessageBox = styled.View`
   border-radius: 30px;
   justify-content: center;
   align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
 `;
 const AffirmationMessageText = styled.Text`
-  font-size: 25px;
-  font-weight: 500;
+  font-size: 15px;
+  font-family: 'Pretendard-Light';
 `;
 const AffirmationGoalBox = styled.View`
   width: ${windowWidth * 0.15}px;
@@ -81,7 +85,7 @@ const AffirmationGoalBox = styled.View`
 `;
 const AffirmationGoalText = styled.Text`
   font-size: 25px;
-  font-weight: 500;
+  font-family: 'Pretendard-Light';
 `;
 const AffirmationDelBtn = styled.View`
   width: ${windowWidth * 0.1}px;
@@ -174,7 +178,7 @@ function Write() {
           affirmationDatas.map((affirmationData) => 
             <AffirmationBox key={affirmationData._id}>
               <AffirmationMessageBox>
-                <AffirmationMessageText>{affirmationData.message}</AffirmationMessageText>
+                <AffirmationMessageText numberOfLines={2} ellipsizeMode={'tail'}>{affirmationData.message}</AffirmationMessageText>
               </AffirmationMessageBox>
               <AffirmationGoalBox>
                 <AffirmationGoalText>{affirmationData.goal}</AffirmationGoalText>

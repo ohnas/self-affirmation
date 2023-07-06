@@ -27,6 +27,7 @@ const ModeTitleBox = styled.View`
 `;
 const ModeTitle = styled.Text`
   font-size: 15px;
+  font-family: 'Pretendard-Regular';
 `;
 const ModeBox = styled.View`
   width: ${windowWidth * 0.9}px;
@@ -39,6 +40,7 @@ const ModeBox = styled.View`
 `;
 const ModeBoxText = styled.Text`
   font-size: 25px;
+  font-family: 'Pretendard-Regular';
 `;
 const Temp = styled.View`
   flex: 1;

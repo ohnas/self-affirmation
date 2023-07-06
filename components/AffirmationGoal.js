@@ -4,6 +4,7 @@ import { DBContext, Achievement } from '../context';
 
 const Goal = styled.Text`
     font-size: 100px;
+    font-family: 'Pretendard-Regular';
 `;
 
 function AffirmationGoal({ data }) {

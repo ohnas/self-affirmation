@@ -34,8 +34,8 @@ const HeaderBox = styled.Pressable`
   background-color: ${(props) => props.selected ? '#dcdde1' : '#718093'};
 `;
 const HeaderText = styled.Text`
+  font-family: 'Pretendard-Regular';
   font-size: 20px;
-  font-weight: 600;
   color: ${(props) => props.selected ? 'black' : 'white'};
 `;
 const CounterBody = styled.View`
@@ -54,6 +54,7 @@ const CounterBodyBox = styled.Pressable`
 `;
 const CounterBodyText = styled.Text`
   font-size: 100px;
+  font-family: 'Pretendard-Regular';
 `;
 const CounterFooter = styled.View`
   flex: 1;
@@ -87,6 +88,7 @@ const AffirmationBodyBox = styled.Pressable`
 `;
 const AffirmationBodyText = styled.Text`
   font-size: 100px;
+  font-family: 'Pretendard-Regular';
 `;
 const AffirmationFooter = styled.View`
   flex: 1;
@@ -109,7 +111,7 @@ function Counter({ navigation: { navigate } }) {
   const realmDB = useRealm();
   const affirmationDatas = useQuery(Affirmation);
   const achievementDatas = useQuery(Achievement);
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState(true);
   const [counterNum, setCounterNum] = useState(0);
   const [affirmationNum, setAffirmationNum] = useState(0);
   const [affirmationData, setAffirmationData] = useState(null);
