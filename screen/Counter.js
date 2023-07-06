@@ -71,6 +71,11 @@ const AffirmationHeader = styled.View`
   justify-content: center;
   margin-bottom: 13px;
 `;
+const AffirmationHeaderText = styled.Text`
+  font-size: 20px;
+  color: white;
+  font-family: 'Pretendard-Regular';
+`;
 const AffirmationBody = styled.View`
   flex: 8;
   border-radius: 30px;
@@ -134,7 +139,7 @@ function Counter({ navigation: { navigate } }) {
       } else {
         setAffirmationData('Done');
         Alert.alert(
-          "알림" , "🎉 완료!!"
+          "알림" , "🎉 축하합니다. 오늘도 발전하고 있네요!"
         );  
       }
     } else {
@@ -210,9 +215,12 @@ function Counter({ navigation: { navigate } }) {
         <>
           <AffirmationHeader>
             {affirmationData === null ? 
-              <Text style={{fontSize: 20, color:'white'}}>No data.</Text>
+              <AffirmationHeaderText>No data.</AffirmationHeaderText>
               :
-              <AffirmationMessage data={affirmationData} />
+              affirmationDatas.length === 0 ? 
+                <AffirmationHeaderText>No data.</AffirmationHeaderText>
+                :
+                <AffirmationMessage data={affirmationData} />
             }
           </AffirmationHeader>
           <AffirmationBody>
@@ -229,7 +237,10 @@ function Counter({ navigation: { navigate } }) {
               {affirmationData === null ? 
                 <AffirmationBodyText>Goal</AffirmationBodyText>
                 :
-                <AffirmationGoal data={affirmationData} />
+                affirmationDatas.length === 0 ? 
+                  <AffirmationBodyText>Goal</AffirmationBodyText>
+                  :
+                  <AffirmationGoal data={affirmationData} />
               }
             </AffirmationBodyBox>
             <AffirmationFooter>
