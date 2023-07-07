@@ -121,14 +121,26 @@ function Counter({ navigation: { navigate } }) {
   const [affirmationNum, setAffirmationNum] = useState(0);
   const [affirmationData, setAffirmationData] = useState(null);
   function handleAffirmationData() {
-    realmDB.write(() => {
-      let data = affirmationData.datas.find((element) => element.date === todayValue && element.success === true );
-      if(data === undefined) {
+    let data = affirmationData.datas.find((element) => element.date === todayValue);
+    if(data === undefined) {
+      realmDB.write(() => {
         affirmationData.datas.push({
           date: todayValue,
           success: true,
         });
-      }
+      });
+    } else if(data) {
+      realmDB.write(() => {
+        data.success = true;
+      });
+    }
+  }
+  function resetTodaySuccess() {
+    affirmationDatas.forEach((element) => {
+      let data = element.datas.find((item) => item.date === todayValue && item.success === true );
+      realmDB.write(() => {
+        data.success = false;
+      });
     });
   }
   useEffect(() => {
@@ -244,7 +256,14 @@ function Counter({ navigation: { navigate } }) {
               }
             </AffirmationBodyBox>
             <AffirmationFooter>
-              <Fontisto name="spinner-rotate-forward" size={36} color="black" style={{marginRight:10}} onPress={() => setAffirmationNum(0)} />
+              <Fontisto name="spinner-rotate-forward" size={36} color="black" style={{marginRight:10}} onPress={() => {
+                if(affirmationData === 'Done'){
+                  resetTodaySuccess();
+                } else {
+                  setAffirmationNum(0);
+                }
+                }}
+              />
               <AntDesign name="minuscircleo" size={36} color="black" style={{marginLeft:10}} onPress={() => {
                 if(affirmationNum === 0) {
                   setAffirmationNum(0);
