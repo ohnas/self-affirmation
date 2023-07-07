@@ -3,8 +3,8 @@ import { styled } from 'styled-components/native';
 import { Fontisto } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, Dimensions, Alert } from 'react-native';
-import { DBContext, Affirmation, Achievement } from '../context';
+import { Dimensions, Alert, Vibration } from 'react-native';
+import { DBContext, Affirmation, Achievement, Mode } from '../context';
 import AffirmationMessage from '../components/AffirmationMessage';
 import AffirmationGoal from '../components/AffirmationGoal';
 
@@ -116,10 +116,12 @@ function Counter({ navigation: { navigate } }) {
   const realmDB = useRealm();
   const affirmationDatas = useQuery(Affirmation);
   const achievementDatas = useQuery(Achievement);
+  const modeDatas = useQuery(Mode);
   const [selected, setSelected] = useState(true);
   const [counterNum, setCounterNum] = useState(0);
   const [affirmationNum, setAffirmationNum] = useState(0);
   const [affirmationData, setAffirmationData] = useState(null);
+  console.log(modeDatas);
   function handleAffirmationData() {
     let data = affirmationData.datas.find((element) => element.date === todayValue);
     if(data === undefined) {
@@ -142,6 +144,15 @@ function Counter({ navigation: { navigate } }) {
         data.success = false;
       });
     });
+  }
+  function oneVibration() {
+    Vibration.vibrate([200]);
+  }
+  function twoVibration() {
+    Vibration.vibrate([200, 200, 200]);
+  }
+  function threeVibration() {
+    Vibration.vibrate([200, 200, 200, 200, 200]);
   }
   useEffect(() => {
     if(affirmationDatas.length !== 0) {
