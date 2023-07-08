@@ -2,7 +2,7 @@
   "expo": {
     "name": "self-affirmation",
     "slug": "self-affirmation",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],

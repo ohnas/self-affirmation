@@ -121,7 +121,6 @@ function Counter({ navigation: { navigate } }) {
   const [counterNum, setCounterNum] = useState(0);
   const [affirmationNum, setAffirmationNum] = useState(0);
   const [affirmationData, setAffirmationData] = useState(null);
-  console.log(modeDatas);
   function handleAffirmationData() {
     let data = affirmationData.datas.find((element) => element.date === todayValue);
     if(data === undefined) {
@@ -219,7 +218,13 @@ function Counter({ navigation: { navigate } }) {
       </Header>
       {selected === false ? 
         <CounterBody>
-          <CounterBodyBox onPress={() => setCounterNum((prev) => prev + 1 )}>
+          <CounterBodyBox onPress={() => {
+            setCounterNum((prev) => prev + 1 );
+            if(modeDatas[0].value === true) {
+              oneVibration();
+            }
+            }}
+          >
             <CounterBodyText>{counterNum}</CounterBodyText>
           </CounterBodyBox>
           <CounterFooter>
@@ -229,6 +234,9 @@ function Counter({ navigation: { navigate } }) {
                 setCounterNum(0);
               } else {
                 setCounterNum((prev) => prev - 1 );
+                if(modeDatas[0].value === true) {
+                  oneVibration();
+                }
               }
               }} 
             />
@@ -250,8 +258,18 @@ function Counter({ navigation: { navigate } }) {
             <AffirmationBodyBox onPress={() => {
               if(affirmationData === 'Done') {
                 setAffirmationNum(0);
+                if(modeDatas[0].value === true) {
+                  threeVibration();
+                }
               } else {
                 setAffirmationNum((prev) => prev + 1 );
+                if(modeDatas[0].value === true) {
+                  if(affirmationNum === affirmationData.goal) {
+                    twoVibration();
+                  } else {
+                    oneVibration();
+                  }
+                }
               }
               }}
             >
@@ -280,6 +298,9 @@ function Counter({ navigation: { navigate } }) {
                   setAffirmationNum(0);
                 } else {
                   setAffirmationNum((prev) => prev - 1 );
+                  if(modeDatas[0].value === true) {
+                    oneVibration();
+                  }
                 }
                 }} 
               />
